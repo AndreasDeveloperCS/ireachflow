@@ -1,0 +1,35 @@
+$screen-size-small: 380px;
+$screen-size-mobile: 600px;
+$screen-size-tab: 960px;
+$screen-size-netbook: 1280px;
+$screen-size-middle: 1600px;
+$screen-size-laptop: 1920px;
+
+$primary-text-color: rgb(55, 248, 136);
+
+$primary-border-color: green;
+$hover-border-color:rgb(47, 239, 47);
+$active-border-color: rgb(104, 255, 104);
+$disabled-border-color: rgb(180, 227, 180);
+
+$primary-background-color:  rgb(0, 9, 35);
+$primary-semitransparentbackground-color:  rgba(0, 9, 35, 0.75);
+$hover-background-color: rgb(4, 20, 144);
+$active-background-color:  rgb(38, 62, 245);
+$disabled-background-color:  rgb(83, 88, 133);
+
+$primary: #00145abf;
+$primary-half: rgba(0, 20, 90, 0.5);
+$primaryOne:#006F8F;
+$primaryTwo:#15429B;
+$primaryThree: #28AFB0;
+$primary-dark: rgba(#000D3D, (1.0));
+$secondary:#ACCCF9;
+$active-text: white;
+$text-field-color:rgba(85, 90, 223, 0.20);
+
+$alternative-background: radial-gradient($primary-dark 0%, $primaryTwo 55%, $primary-dark 100%);
+$secondary-background: radial-gradient($primary-dark, $primary, $primary-dark);
+$main-background-image: linear-gradient(45deg, $active-text 0%, $secondary 50%, $primaryOne 65%, $primaryTwo 80%, $primary-dark 100%);
+$misterious-background-image:radial-gradient($primary, $primary-dark);
+$main-button-gradient : linear-gradient(225deg, #28AFB0 0%, #186582 52.1%, #0A2158 100%);

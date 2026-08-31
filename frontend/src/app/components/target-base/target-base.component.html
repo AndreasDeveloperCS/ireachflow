@@ -1,0 +1,48 @@
+<div class="site-content">
+    <h2>Please, fill fields and send email</h2>
+
+    <form [formGroup]="emailForm">
+        <div>
+
+            <mat-button 
+                mat-raised-button
+                (click)="fileInput.click()">
+                Select file with target emails list 
+            </mat-button>
+        
+            <input hidden 
+                (change)="onFileSelected($event)"
+                [accept]="extensions"
+                #fileInput type="file">
+
+        </div>
+       
+        <mat-form-field appearance="fill">
+
+            <span *ngIf="false" for="file">Target Emails List File name:</span>
+
+            <div>
+
+                <input mat-dialog-title [readonly]="true"
+                        formControlName="targetAddressList"
+                        matInput
+                        [value]="emailAddressesFileName == '' || emailAddressesFileName == undefined ? 'Please select target email list' : emailAddressesFileName">
+
+            </div>
+            <!-- <mat-error *ngIf="emailForm.controls.emailText?.invalid">
+                <div class="errors">
+                    <p *ngIf="emailForm.controls.emailText?.errors">Email content is required</p>
+                </div>
+            </mat-error> -->
+        </mat-form-field>
+    </form>
+    <div mat-dialog-actions [align]="'center'" >
+       
+        <mat-button type="submit" (click)="onApply()" 
+                [attr.disabled]=isJustSent>
+                Upload
+        </mat-button>
+
+        <div class="notification" *ngIf="isJustSent">Target emails database is being updated. Please wait {{reverseTimer/1000}}</div>
+    </div>
+</div>

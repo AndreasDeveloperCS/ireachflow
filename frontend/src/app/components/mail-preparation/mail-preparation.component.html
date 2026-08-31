@@ -1,0 +1,253 @@
+<div class="site-content">
+    <h2>Please, fill fields and send email</h2>
+
+    <form [formGroup]="emailForm">
+
+            <mat-form-field appearance="fill">
+                <input 
+                        autocomplete="on"
+                        name="sourceAddress"
+                        formControlName="sourceAddress"
+                        matInput
+                        [placeholder]="'Source email'"
+                        [value]="emailFormData.emailInfo.sourceAddress"
+                        [(ngModel)]="emailFormData.emailInfo.sourceAddress"
+                        required
+                />
+                <!-- <mat-error *ngIf="emailForm.controls.sourceAddress?.invalid">
+                    <div class="errors">
+                        <p *ngIf="emailForm.controls.sourceAddress?.errors">Source email address is required</p>
+                    </div>
+                </mat-error> -->
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill" >
+
+                <input 
+                        type="password"
+                        name="sourcePassword"
+                        formControlName="sourcePassword"
+                        autocomplete="on"
+                        matInput
+                        [placeholder]="'Source email box password'"
+                        [(ngModel)]="emailFormData.emailInfo.sourcePassword"
+                        required
+                />
+
+                <!-- <mat-error *ngIf="emailForm.controls.sourcePassword?.invalid">
+                    <div class="errors">
+                        <p *ngIf="emailForm.controls.sourcePassword?.errors">Source email box password is required</p>
+                    </div>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" >
+                <input 
+                        matInput class="input-field"
+                        [placeholder]="'Email subject'"
+                        name="subject"
+                        formControlName="subject"
+                        [(ngModel)]="emailFormData.emailInfo.subject"
+                        required
+                />
+                <!-- <mat-error *ngIf="emailForm.controls.subject?.invalid" >
+                    <div class="errors">
+                        <p *ngIf="emailForm.controls.subject?.errors">Subject of email is required</p>
+                    </div>
+                </mat-error> -->
+            </mat-form-field>
+          
+            <mat-form-field appearance="fill" >
+             
+                   <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+
+                    <ngx-editor
+                        autocomplete="on"
+                        name="emailText"
+                        formControlName="emailText"
+                        [editor]="editor"
+                        [(ngModel)]="emailFormData.emailInfo.emailText"
+                        [disabled]="false"
+                        (ngModelChange)="editorChange($event)"
+                        [placeholder]="'Email Content'">
+                    </ngx-editor>
+
+                    <input class="email-text"
+                        name="emailText"
+                        formControlName="emailText"
+                        matInput
+                        [placeholder]="'Email Content'"
+                        [value]="emailFormData.emailInfo.emailText"
+                        required hidden 
+                    />
+                <!-- <mat-error *ngIf="emailForm.controls.emailText?.invalid">
+                    <div class="errors">
+                        <p *ngIf="emailForm.controls.emailText?.errors">Email content is required</p>
+                    </div>
+                </mat-error> -->
+            </mat-form-field>
+            
+            <app-switcher   
+                [confirmationText]="'Without Attachments'"
+                [refusionText]="'Include Attachments'"
+                [amAgree]="confirmWithoutAttachment"
+                (confirmationChanged)="onAttachmentsConfirmationChanged($event)">
+            </app-switcher>
+
+            <div *ngIf="!confirmWithoutAttachment">
+
+                <mat-button 
+                    mat-raised-button
+                    (click)="attachmentsInput.click()">
+                    Select Attachments
+                </mat-button>
+            
+                <input hidden multiple
+                    (change)="onAttachmentsSelected($event)"
+                    #attachmentsInput type="file">
+
+            </div>
+           
+            <div [ngClass]="confirmWithoutAttachment || !isAttachmentExist ? 'hidden' : 'visible' ">
+                <mat-expansion-panel [expanded]="false"  [ngClass]="confirmWithoutAttachment || !isAttachmentExist ? 'hidden' : 'visible' ">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title >
+                        Attachments ({{emailFormData.attachments.length}})
+                        </mat-panel-title>
+                        <mat-panel-description>
+                        <!-- Selected all filters -->
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                   
+                    <mat-form-field appearance="fill" >
+                        <div class="attachment-block"  *ngFor="let attachment of emailFormData.attachments">
+                            <div class="attachment">
+                               <app-clip></app-clip>
+                               {{attachment.fileInfo.name}}
+                               <app-close-button (click)="removeAttachment(attachment)"></app-close-button>
+                           </div>
+                       </div>
+                        <input
+                            formControlName="attachments"
+                            matInput
+                            [placeholder]="'Email Attachment'"
+                            required hidden/> 
+                    </mat-form-field>
+                </mat-expansion-panel>
+            </div>
+ <!-- 
+            <div>
+
+                <mat-button 
+                    mat-raised-button
+                    (click)="attachmentsInput.click()">
+                    Select attachments if necessary 
+                </mat-button>
+            
+                <input hidden multiple="multiple"
+                    (change)="onAttachmentsSelected($event)"
+                    [accept]="extensions"
+                    #attachmentsInput type="file">
+
+            </div>
+
+            <mat-form-field appearance="fill">
+
+                <span *ngIf="false" for="file">Attachment name:</span>
+
+               <div>
+                    <input mat-dialog-title [readonly]="true"
+                            formControlName="targetAddressList"
+                            matInput
+                            [value]="fileName == '' || fileName == undefined ? 'Please select target email list' : fileName">
+                </div> 
+
+            </mat-form-field>-->
+
+            <div>
+
+                <mat-button 
+                    mat-raised-button
+                    (click)="fileInput.click()">
+                    Select file with target emails list 
+                </mat-button>
+            
+                <input hidden 
+                    (change)="onFileSelected($event)"
+                    [accept]="extensions"
+                    #fileInput type="file">
+
+            </div>
+           
+            <mat-form-field appearance="fill" >
+
+                <span *ngIf="false" for="file">Target Emails List File name:</span>
+
+                <div>
+
+                    <input mat-dialog-title [readonly]="true"
+                            formControlName="targetAddressList"
+                            matInput
+                            [value]="emailAddressesFileName == '' || emailAddressesFileName == undefined ? 'Please select target email list' : emailAddressesFileName">
+
+                </div>
+                <!-- <mat-error *ngIf="emailForm.controls.emailText?.invalid">
+                    <div class="errors">
+                        <p *ngIf="emailForm.controls.emailText?.errors">Email content is required</p>
+                    </div>
+                </mat-error> -->
+            </mat-form-field>
+            <!-- <div  class="recaptcha">
+                <re-captcha id="recaptcha" name="recaptcha"
+                    [(ngModel)]="candidateInfoData.recaptcha"
+                    [siteKey]="capchaKey"
+                    formControlName="recaptcha"
+                    required
+                    [class.is-invalid]="emailForm.controls.recaptcha?.invalid
+                    && (emailForm.controls.recaptcha?.dirty
+                    || emailForm.controls.recaptcha?.touched)">
+                </re-captcha>
+            </div> -->
+
+
+        <!-- <div class="cover-letter" >
+        <mat-form-field appearance="fill" #parent>
+                <textarea
+                    matInput
+                    rows="42"
+                    formControlName="coverLetterText"
+                    cdkTextareaAutosize
+                    [placeholder]="content.txtCoverLetter"
+                    cdkAutosizeMinRows="42"
+                    cdkAutosizeMaxRows="42"
+                    name="coverLetterText"
+                    [(ngModel)]="candidateInfoData.coverLetterText"
+                ></textarea>
+            </mat-form-field> 
+        </div> -->
+    </form>
+       
+    <mat-spinner class="spinner-email-sent" *ngIf="isJustSent">Email Is Sent {{ progress }} </mat-spinner>
+    
+    <!--
+        <md-progress-spinner 
+            class="spinner-email-sent" *ngIf="isJustSent"
+            color="greenyellow"
+            mode="indeterminate"
+            [value]="95">   654  
+        </md-progress-spinner> 
+    -->
+    <!-- <div style="position:relative; top: -60px; left: 30px;"> Loading </div> -->
+
+    <!-- <app-loadingspinner>Email Sending</app-loadingspinner> -->
+
+    <div mat-dialog-actions [align]="'center'" >
+       
+        <mat-button type="submit" (click)="onApply()" 
+                [attr.disabled]=isJustSent>
+                Send Email
+        </mat-button>
+
+        <div class="notification" *ngIf="isJustSent">Email has been successfully sent to the target addresses list. Please wait {{reverseTimer/1000}}</div>
+    </div>
+</div>

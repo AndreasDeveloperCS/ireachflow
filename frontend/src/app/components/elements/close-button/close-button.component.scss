@@ -1,0 +1,12 @@
+@import 'src/styles.scss';
+
+.close-button {
+    padding-left: 4px;
+    width:32px;
+    height: 32px;
+    &:hover {
+        scale: 1.2, 1.2;
+        color: red;
+        stop-color: red;
+    }
+}

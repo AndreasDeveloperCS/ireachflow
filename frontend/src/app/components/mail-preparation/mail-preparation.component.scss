@@ -1,0 +1,107 @@
+@import 'src/styles.scss';
+
+.attachment-block{
+    display: inline-flex;
+    justify-content: stretch;
+    justify-self: stretch;
+    justify-items: stretch;
+   
+    align-content: stretch;
+    align-self: stretch;
+    align-items: stretch;
+    overflow-x: auto;
+    .attachment {
+        display: inline-flex;
+        //overflow-x: auto;
+        app-clip {
+            padding-left: 4px;
+            padding-right: 4px;
+            float: left;
+        }
+        &:hover {
+            text-decoration: underline;
+            color: $hover-border-color;
+            cursor: pointer;
+        }
+        close-button {
+            float: right;
+            margin-left: 4px;
+            margin-right: 4px;
+            opacity: 0.8;
+            &:hover {
+                opacity: 1;
+                color: red;
+            }
+        }
+    }
+    
+    mat-expansion-panel {
+        flex-grow: 1;
+    }
+    
+    @media (max-width:$screen-size-netbook) {
+        display: block;
+    }
+}
+app-switcher {
+    display: block;
+
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+}
+
+.visible {
+    visibility : "visible";
+    display: block;
+}
+::ng-deep.hidden.mat-mdc-form-field-infix {
+    margin: 0;
+    padding: 0;
+    height: 0;
+    display: none;
+}
+
+::ng-deep .hidden {
+    visibility : "hidden";
+    display: none;
+    display: none;
+   
+    .mat-mdc-form-field-infix {
+        margin: 0;
+        padding: 0;
+        height: 0;
+        display: none;
+    }
+    .mat-mdc-form-field-flex {
+        margin: 0;
+        padding: 0;
+        height: 0;
+        display: none;
+    }
+
+    .mat-mdc-text-field-wrapper {
+        margin: 0;
+        padding: 0;
+        height: 0;
+        display: none;
+    }
+}
+
+.spinner-email-sent{ 
+    //background-color: greenyellow;
+    color: red;
+    vertical-align: middle;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    right: 0;
+    top: 50%;
+    bottom: 0;
+    cursor: pointer;
+}

@@ -1,0 +1,18 @@
+<div class="validation-dialog">
+    <h2>There are issues with next fields:</h2>
+
+    <ul class="attention" >
+        <li *ngFor="let item of data"> {{ item.field }}</li>
+    </ul>
+
+    <br>
+    <br>
+
+    <ul class="recommendation" >
+        <li *ngFor="let item of data"> {{ item.message }}</li>
+    </ul>
+
+    <mat-button mat-dialog-actions mat-button [mat-dialog-close]="data">
+        Ok, thank you. I will resolve it.
+    </mat-button>
+</div>  

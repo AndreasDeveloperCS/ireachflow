@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'styles/variables.scss';
+@import 'styles/general.scss';
+@import 'styles/buttons.scss';
+@import 'styles/blocks.scss';
+
+html, body { 
+    height: 100%;
+}
+
+body { 
+    margin: 0; 
+    font-family: "Perfograma", "Helvetica Neue", sans-serif;
+    font-size: 22;
+}

@@ -1,0 +1,19 @@
+<div class="switcher">
+
+    <div class="confirm-element">
+      <mat-slide-toggle
+        (change)="valueChanged($event)"
+        [checked]="confirmed">
+      </mat-slide-toggle>
+      <span class="text-confirmation">{{confirmationText}}</span>
+    <div>
+  
+    <div class="confirm-element">
+      <mat-slide-toggle class="checkbox"
+        (change)="valueChanged($event)"
+        [checked]="!confirmed">
+      </mat-slide-toggle>
+      <span class="text-confirmation">{{refusionText}}</span>
+    </div>
+    
+  </div>
