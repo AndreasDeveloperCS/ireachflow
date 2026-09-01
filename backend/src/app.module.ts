@@ -27,7 +27,6 @@ import { ReportService } from './services/report/report.service';
       type: 'mongodb',
       url: 'mongodb+srv://affmailer:Q4Fl6oU5eSIjAD5O@affmailer.i4tul1v.mongodb.net/affmailer',
       synchronize: true,
-      useNewUrlParser: true,
       logging: true,
       entities: [Email],
     }),
