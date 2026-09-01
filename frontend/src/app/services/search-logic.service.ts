@@ -1,18 +1,24 @@
-import { EventEmitter, Injectable, OnDestroy, Output } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Email } from '../models/email-form';
+import { PaginatedResource } from '../models/paginated-resource';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+export interface ReportQuery {
+  page: number;
+  size: number;
+  sortProperty?: string;
+  sortDirection?: 'asc' | 'desc';
+  filterProperty?: string;
+  filterRule?: string;
+  filterValue?: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class SearchLogicService  implements OnDestroy {
-
-  emailCollection:Observable<Email[]> = new Observable<Email[]>();
-  emailCollectionScuscription: Subscription | undefined;
-
-
-  private providedUrl: string = 'http://localhost:4000/api/report'; //'http://universities.hipolabs.com/search'
+export class SearchLogicService {
 
   public searchEmails: EventEmitter<Email[]> = new EventEmitter<Email[]>();
 
@@ -20,51 +26,23 @@ export class SearchLogicService  implements OnDestroy {
   public countries: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   @Output()
-  public emailsCollection: EventEmitter<Email[]> = new EventEmitter<Email[]>();
-
-
-  @Output()
-  public emailReportCollection: EventEmitter<Email[]> = new EventEmitter<Email[]>();
-  private reportSubcription: Subscription | undefined;
-
-  @Output()
   public validatedCountry: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private http: HttpClient) { }
 
-  ngOnDestroy(): void {
-    this.reportSubcription?.unsubscribe();
-  }
+  getReport(query: ReportQuery): Observable<PaginatedResource<Email>> {
+    let params = new HttpParams()
+      .set('page', query.page)
+      .set('size', query.size);
 
-  getReport(searched: any){
-    const value = searched;
-    console.log('getReport', searched);
-    const params = new HttpParams()
-          params.set('sortColumn', 'messageId');
-          params.set('sort', 'messageId');
-          params.set('orderBy', 'messageId');
+    if (query.sortProperty && query.sortDirection) {
+      params = params.set('sort', `${query.sortProperty}:${query.sortDirection}`);
+    }
 
-    this.reportSubcription?.unsubscribe();
+    if (query.filterProperty && query.filterRule && query.filterValue) {
+      params = params.set('filter', `${query.filterProperty}:${query.filterRule}:${query.filterValue}`);
+    }
 
-    this.reportSubcription = this.http.get<Email[]>(
-      `${this.providedUrl}?page=0&size=2`, 
-      { 
-        params: params, 
-        responseType: 'json',  
-      }).subscribe((data) => {
-        console.log('', data);
-        
-        const unique = [...new Set(data.map(item => {
-          return item
-        }))].filter((item, index, array) => {
-            return  item;
-        }).sort();
-
-        this.emailsCollection.emit(unique);
-
-        return unique;
-
-    });
-
+    return this.http.get<PaginatedResource<Email>>(`${environment.apiUrl}report`, { params });
   }
 }

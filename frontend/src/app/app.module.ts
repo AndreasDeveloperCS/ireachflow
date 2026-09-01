@@ -16,6 +16,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -74,6 +80,12 @@ import { TargetBaseComponent } from './components/target-base/target-base.compon
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatIconModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatProgressBarModule,
+    MatButtonToggleModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
     
   ],

@@ -25,6 +25,7 @@ yarn-error.log
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+/affmailer-frontend/.vscode
 .history/*
 
 # Miscellaneous
@@ -42,9 +43,10 @@ Thumbs.db
 .angular
 /package-lock.json
 /package-lock.json
-/affmailer-frontend/.vscode
 /node_modules
 /node_modules
 /backend/dist
 /frontend/dist
 /backend/node_modules
+/frontend/node_modules
+/frontend/run.log

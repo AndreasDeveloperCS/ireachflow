@@ -7,7 +7,6 @@ import { AuthenticationDialogComponent } from 'src/app/dialogs/authentication-di
 import { ValidationDialogComponent } from 'src/app/dialogs/validation-dialog/validation-dialog.component';
 import { EmailForm, EmailFormData, FileData } from 'src/app/models/email-form';
 import { EmailSenderService } from 'src/app/services/email-sender.service';
-import { SearchLogicService } from 'src/app/services/search-logic.service';
 import { SpinnnerService } from 'src/app/services/spinnner.service';
 
 @Component({
@@ -79,8 +78,7 @@ export class TargetBaseComponent {
     private emailSenderService: EmailSenderService,
     private matDialog: MatDialog,
     private router: Router,
-    private spinnnerService:SpinnnerService,
-    private searchLogicService:SearchLogicService
+    private spinnnerService:SpinnnerService
   ) {
 
     const retreivedPassword = localStorage.getItem('affmailer-login');
@@ -132,9 +130,6 @@ export class TargetBaseComponent {
   }
 
   ngOnInit(): void {
-    const reportSubscription = this.searchLogicService.getReport(null);
-    console.log('reportSubscription', reportSubscription);
-    
   }
 
   onFileSelected(event: any) {

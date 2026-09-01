@@ -9,19 +9,29 @@ import {
 import { Filtering, FilteringParams } from 'src/helpers/filtering';
 import { Email } from 'src/models/email.model';
 
+const SORTABLE_FIELDS = [
+  'messageId',
+  'mainSourceAddress',
+  'mainTargetAddress',
+  'isOpened',
+  'emailSentDate',
+  'isOpenedDate',
+  'response',
+  'envelopeTime',
+  'messageTime',
+  'messageSize',
+];
+
 @Controller('report')
 export class ReportController {
-  constructor(private reportService: ReportService) {
-    console.log('ReportController', '');
-  }
+  constructor(private reportService: ReportService) {}
 
   @Get()
   async get(
     @PaginationParams() paginationParams: Pagination,
-    @SortingParams(['name', 'id', 'stateId']) sort?: Sorting,
-    @FilteringParams(['name', 'id', 'stateId']) filter?: Filtering,
+    @SortingParams(SORTABLE_FIELDS) sort?: Sorting,
+    @FilteringParams(SORTABLE_FIELDS) filter?: Filtering,
   ): Promise<PaginatedResource<Partial<Email>>> {
-    console.log(paginationParams, sort, filter);
     return await this.reportService.getReport(paginationParams, sort, filter);
   }
 }

@@ -1,104 +1,173 @@
-<div>
+<div class="report-table-wrapper">
 
-    <mat-form-field appearance="fill">
-      <input matInput (keyup)="applyFilter($event)" #input placeholder="Filter">
-    </mat-form-field>
-  
-    <div class="mat-elevation-z8">
-  
-      <mat-table [dataSource]="dataSource" matSort cdkDropList (cdkDropListDropped)="drop($event)" >
+  <div class="report-toolbar">
 
-        <ng-container matColumnDef="messageId" class="middle-column" >
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Message Id</th>
-          <td mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{row.messageId}} </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="mainSourceAddress" class="wide-column" >
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop>Main Source Address</th>
-          <td class="wide-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{row.mainSourceAddress}} </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="mainTargetAddress" class="narrow-column">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Main Target Address</th>
-          <td class="narrow-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{ row.mainTargetAddress }} </td>
-        </ng-container>
+    <div class="filter-group">
+      <mat-form-field appearance="fill" class="filter-column">
+        <mat-label>Filter by</mat-label>
+        <mat-select [(ngModel)]="filterColumn" (selectionChange)="onFilterColumnChange()" [disabled]="openedFilter !== 'all'">
+          <mat-option *ngFor="let col of filterableColumns" [value]="col.key">{{ col.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-        <ng-container matColumnDef="isOpened" class="narrow-column">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Is Opened</th>
-          <td class="narrow-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{ row.isOpened }} </td>
-        </ng-container>
+      <mat-form-field appearance="fill" class="filter-value">
+        <mat-label>Search</mat-label>
+        <input matInput
+               [ngModel]="filterText"
+               (ngModelChange)="onFilterTextChange($event)"
+               [disabled]="openedFilter !== 'all'"
+               placeholder="Type to search…">
+        <button type="button" mat-icon-button matSuffix *ngIf="filterText" (click)="clearFilter()" aria-label="Clear filter">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
 
-        <ng-container matColumnDef="emailSentDate" class="narrow-column">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Email Sent Date</th>
-          <td class="narrow-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{ row.emailSentDate }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="isOpenedDate" class="narrow-column">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Is Opened Date</th>
-          <td class="narrow-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{ row.isOpenedDate }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="response" class="narrow-column">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Response</th>
-          <td class="narrow-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{ row.response }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="accepted" class="middle-column" >
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Accepted</th>
-          <td class="middle-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop>
-            <div *ngFor="let item of row.accepted">
-              {{ item }}
-            </div>
-          </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="rejected" class="middle-column" >
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop>Rejected</th>
-          <td class="middle-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop>
-            <div *ngFor="let item of row.rejected">
-              {{ item }}
-            </div>
-          </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="envelopeTime" class="narrow-column">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Message Time</th>mat
-          <td class="narrow-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{ row.messageTime }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="messageTime" class="narrow-column">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Message Time</th>
-          <td class="narrow-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{ row.messageTime }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="messageSize" class="narrow-column">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Message Size</th>
-          <td class="narrow-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop> {{ row.messageSize }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="ehlo" class="middle-column" >
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDrop >Ehlo</th>
-          <td class="middle-column" mat-cell *matCellDef="let row" cdkDrag cdkDrop>
-            <div *ngFor="let item of row.ehlo">
-              {{ item }}
-            </div>
-          </td>
-        </ng-container>
-  
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="6">No data matching the filter "{{ input.value}}"</td>
-        </tr>
-      </mat-table>
-  
-      <mat-paginator [pageSize]="10"
-                     [showFirstLastButtons]="true"
-                     [pageSizeOptions]="[5, 10, 15, 20, 25, 50, 100]"
-                     aria-label="Select page of users">
-      </mat-paginator>
+      <mat-button-toggle-group class="opened-toggle" [value]="openedFilter" (change)="setOpenedFilter($event.value)">
+        <mat-button-toggle value="all">All</mat-button-toggle>
+        <mat-button-toggle value="opened">Opened</mat-button-toggle>
+        <mat-button-toggle value="not-opened">Not opened</mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
+
+    <div class="action-group">
+      <span class="total-count" *ngIf="!loading">{{ totalItems }} email{{ totalItems === 1 ? '' : 's' }}</span>
+
+      <button type="button" mat-icon-button [disabled]="loading" (click)="refresh()" aria-label="Refresh" matTooltip="Refresh">
+        <mat-icon>refresh</mat-icon>
+      </button>
+
+      <button type="button" mat-icon-button [disabled]="!dataSource.data.length" (click)="exportCsv()" aria-label="Export CSV" matTooltip="Export current page as CSV">
+        <mat-icon>download</mat-icon>
+      </button>
+
+      <button type="button" mat-icon-button [matMenuTriggerFor]="columnsMenu" aria-label="Show/hide columns" matTooltip="Columns">
+        <mat-icon>view_column</mat-icon>
+      </button>
+      <mat-menu #columnsMenu="matMenu">
+        <div class="columns-menu">
+          <mat-checkbox *ngFor="let col of allColumns"
+                        [checked]="!hiddenColumns.has(col.key)"
+                        (change)="toggleColumn(col.key)"
+                        (click)="$event.stopPropagation()">
+            {{ col.label }}
+          </mat-checkbox>
+        </div>
+      </mat-menu>
+    </div>
+
+  </div>
+
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+  <div class="error-banner" *ngIf="errorMessage">
+    {{ errorMessage }}
+    <button type="button" mat-button (click)="refresh()">Retry</button>
+  </div>
+
+  <div class="table-scroll mat-elevation-z4">
+
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+
+      <ng-container matColumnDef="messageId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-messageId">Message Id</th>
+        <td mat-cell *matCellDef="let row" class="col-messageId ellipsis" [title]="row.messageId">{{ row.messageId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="mainSourceAddress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-address">Source Address</th>
+        <td mat-cell *matCellDef="let row" class="col-address ellipsis" [title]="row.mainSourceAddress">{{ row.mainSourceAddress }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="mainTargetAddress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-address">Target Address</th>
+        <td mat-cell *matCellDef="let row" class="col-address ellipsis" [title]="row.mainTargetAddress">{{ row.mainTargetAddress }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="isOpened">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-status">Opened</th>
+        <td mat-cell *matCellDef="let row" class="col-status">
+          <span class="pill" [class.pill-success]="row.isOpened" [class.pill-neutral]="!row.isOpened">
+            {{ row.isOpened ? 'Opened' : 'Not opened' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="emailSentDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-date">Sent</th>
+        <td mat-cell *matCellDef="let row" class="col-date">{{ row.emailSentDate | date:'short' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="isOpenedDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-date">Opened At</th>
+        <td mat-cell *matCellDef="let row" class="col-date">{{ row.isOpenedDate ? (row.isOpenedDate | date:'short') : '—' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="response">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-response">Response</th>
+        <td mat-cell *matCellDef="let row" class="col-response ellipsis" [title]="row.response">
+          <span class="pill" [class.pill-success]="isSuccessResponse(row.response)" [class.pill-danger]="!isSuccessResponse(row.response)">
+            {{ row.response }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accepted">
+        <th mat-header-cell *matHeaderCellDef cdkDrag class="col-list">Accepted</th>
+        <td mat-cell *matCellDef="let row" class="col-list">
+          <span class="chip chip-success" *ngFor="let item of row.accepted">{{ item }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rejected">
+        <th mat-header-cell *matHeaderCellDef cdkDrag class="col-list">Rejected</th>
+        <td mat-cell *matCellDef="let row" class="col-list">
+          <span class="chip chip-danger" *ngFor="let item of row.rejected">{{ item }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="envelopeTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-number">Envelope Time</th>
+        <td mat-cell *matCellDef="let row" class="col-number">{{ row.envelopeTime }} ms</td>
+      </ng-container>
+
+      <ng-container matColumnDef="messageTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-number">Message Time</th>
+        <td mat-cell *matCellDef="let row" class="col-number">{{ row.messageTime }} ms</td>
+      </ng-container>
+
+      <ng-container matColumnDef="messageSize">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag class="col-number">Size</th>
+        <td mat-cell *matCellDef="let row" class="col-number">{{ formatSize(row.messageSize) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ehlo">
+        <th mat-header-cell *matHeaderCellDef cdkDrag class="col-list">Ehlo</th>
+        <td mat-cell *matCellDef="let row" class="col-list">
+          <span class="chip" *ngFor="let item of row.ehlo">{{ item }}</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data-cell" [attr.colspan]="displayedColumns.length">
+          <ng-container *ngIf="!loading">
+            No emails match the current filter.
+            <button type="button" mat-button (click)="clearFilter(); setOpenedFilter('all')" *ngIf="filterText || openedFilter !== 'all'">Clear filters</button>
+          </ng-container>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <mat-paginator [length]="totalItems"
+                 [pageIndex]="pageIndex"
+                 [pageSize]="pageSize"
+                 [showFirstLastButtons]="true"
+                 [pageSizeOptions]="[10, 25, 50, 100]"
+                 (page)="onPage($event)"
+                 aria-label="Select page of emails">
+  </mat-paginator>
+
 </div>
-  
