@@ -1,11 +1,13 @@
 import { IsNull, Not, LessThan, LessThanOrEqual, MoreThan, MoreThanOrEqual, ILike, In } from "typeorm";
+import { SortOrder } from "mongoose";
 import { FilterRule, Filtering } from "./filtering";
 import { Sorting } from "./sorting";
 
 
 export const getOrder = (sort: Sorting) => sort ? { [sort.property]: sort.direction } : {};
 
-export const getMongoOrder = (sort: Sorting) => sort ? { [sort.property]: sort.direction === 'desc' ? -1 : 1 } : {};
+export const getMongoOrder = (sort: Sorting): Record<string, SortOrder> =>
+    sort ? { [sort.property]: sort.direction === 'desc' ? -1 : 1 } : {};
 
 export const getMongoWhere = (filter: Filtering) => {
     if (!filter)
