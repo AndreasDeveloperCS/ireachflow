@@ -12,7 +12,7 @@ export class SearchLogicService  implements OnDestroy {
   emailCollectionScuscription: Subscription | undefined;
 
 
-  private providedUrl: string = 'http://localhost:3000/api/report'; //'http://universities.hipolabs.com/search'
+  private providedUrl: string = 'http://localhost:4000/api/report'; //'http://universities.hipolabs.com/search'
 
   public searchEmails: EventEmitter<Email[]> = new EventEmitter<Email[]>();
 

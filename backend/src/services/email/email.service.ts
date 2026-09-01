@@ -19,7 +19,7 @@ var path = require("path");
 @Injectable()
 export class EmailService {
     testingEmail = "andrewdevelopercs@gmail.com";
-    pixelUrl = "http://localhost:3000/api/asset";
+    pixelUrl = "http://localhost:4000/api/asset";
     pixelUrlServer = "https://affmailer.co/api/asset";
     dkimInfo:DkimInfo = new DkimInfo();
 

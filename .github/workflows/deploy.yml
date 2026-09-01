@@ -99,7 +99,7 @@ jobs:
           export PM2_HOME="${PM2_HOME:-$HOME/.pm2}"
           pm2_cmd() { "$PM2_BIN" "$@"; }
 
-          pm2_cmd delete ireachflow-backend ireachflow-frontend || true
+          pm2_cmd delete ireachflow-backend || true
           pm2_cmd start ecosystem.config.js --update-env
           pm2_cmd save
 
@@ -110,7 +110,7 @@ jobs:
           export PM2_HOME="${PM2_HOME:-$HOME/.pm2}"
           pm2_cmd() { "$PM2_BIN" "$@"; }
 
-          for app in ireachflow-backend ireachflow-frontend; do
+          for app in ireachflow-backend; do
             echo "Waiting for PM2 app: ${app}"
             for i in {1..15}; do
               if pm2_cmd describe "$app" | grep -q "status.*online"; then
@@ -131,15 +131,20 @@ jobs:
 
           pm2_cmd list
 
-      - name: Verify backend and frontend are responding
+      - name: Verify backend is responding
         run: |
           set -euo pipefail
 
-          curl --fail --retry 10 --retry-delay 2 --retry-connrefused http://127.0.0.1:3000/api >/dev/null
-          echo "iReachFlow backend is responding on port 3000"
+          curl --fail --retry 10 --retry-delay 2 --retry-connrefused http://127.0.0.1:4000/api >/dev/null
+          echo "iReachFlow backend is responding on port 4000"
 
-          curl --fail --retry 10 --retry-delay 2 --retry-connrefused http://127.0.0.1:4200 >/dev/null
-          echo "iReachFlow frontend is responding on port 4200"
+      - name: Verify frontend build output exists
+        working-directory: ${{ vars.APP_PATH }}/frontend
+        run: |
+          set -euo pipefail
+
+          test -f dist/ireachflow/index.html
+          echo "iReachFlow frontend static build is present"
 
       - name: Install and reload Nginx
         working-directory: ${{ vars.APP_PATH }}

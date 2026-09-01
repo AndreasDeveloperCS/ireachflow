@@ -8,8 +8,8 @@ export const headersLine =
 export const whiteList = [
     "http://localhost:4200",
     "https://localhost:4200",
-    "http://localhost:3000",
-    "https://localhost:3000",
+    "http://localhost:4000",
+    "https://localhost:4000",
   ];
 
 export const methods = [
