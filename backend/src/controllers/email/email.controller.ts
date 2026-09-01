@@ -63,13 +63,13 @@ export class EmailController {
     //   }),
     FilesInterceptor('files[]', 100, {
       storage: diskStorage({
-        destination: '../../uploads/',
+        destination: '../uploads/',
         filename: (req, file, cb) => {
           console.log('files');
           const dt = new Date(Date.now());
           const dtStamp = `${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}-${dt.getHours()}-${dt.getMinutes()}-${dt.getSeconds()}-${dt.getMilliseconds()}`
 
-          const rootFolder = path.join(`..`, `..`, `uploads`, dtStamp);
+          const rootFolder = path.join(`..`, `uploads`, dtStamp);
           if (!fs.existsSync(rootFolder)){
             fs.mkdirSync(rootFolder);
           }
