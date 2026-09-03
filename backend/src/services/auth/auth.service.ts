@@ -17,6 +17,10 @@ export interface JwtPayload {
 
 const SALT_ROUNDS = 10;
 
+function isDuplicateKeyError(error: unknown): error is { code: number } {
+  return typeof error === 'object' && error !== null && 'code' in error && error.code === 11000;
+}
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -26,30 +30,47 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto): Promise<UserDocument> {
-    const existing = await this.usersService.findByEmail(dto.email);
+    const email = dto.email.toLowerCase().trim();
+    const existing = await this.usersService.findByEmail(email);
     if (existing) {
       throw new ConflictException('An account with this email already exists');
     }
 
     const organization = await this.organizationModel.create({
-      name: dto.organizationName,
+      name: dto.organizationName.trim(),
       ownerId: null,
     });
 
-    const passwordHash = await bcrypt.hash(dto.password, SALT_ROUNDS);
-    const user = await this.usersService.create({
-      email: dto.email,
-      passwordHash,
-      firstName: dto.firstName,
-      lastName: dto.lastName,
-      role: UserRole.OWNER,
-      organizationId: organization._id,
-    });
+    let user: UserDocument | null = null;
 
-    organization.ownerId = user._id;
-    await organization.save();
+    try {
+      const passwordHash = await bcrypt.hash(dto.password, SALT_ROUNDS);
+      user = await this.usersService.create({
+        email,
+        passwordHash,
+        firstName: dto.firstName.trim(),
+        lastName: dto.lastName.trim(),
+        role: UserRole.OWNER,
+        organizationId: organization._id,
+      });
 
-    return user;
+      organization.ownerId = user._id;
+      await organization.save();
+
+      return user;
+    } catch (error) {
+      const cleanup = [this.organizationModel.deleteOne({ _id: organization._id })];
+      if (user?._id) {
+        cleanup.push(this.usersService.deleteById(user._id.toString()));
+      }
+      await Promise.allSettled(cleanup);
+
+      if (isDuplicateKeyError(error)) {
+        throw new ConflictException('An account with this email already exists');
+      }
+
+      throw error;
+    }
   }
 
   async validateUser(email: string, password: string): Promise<UserDocument> {

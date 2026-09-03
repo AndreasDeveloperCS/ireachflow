@@ -22,4 +22,8 @@ export class UsersService {
   create(data: Partial<User>): Promise<UserDocument> {
     return this.userModel.create(data);
   }
+
+  deleteById(id: string) {
+    return this.userModel.deleteOne({ _id: id });
+  }
 }
