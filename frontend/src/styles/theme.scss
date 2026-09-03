@@ -1,0 +1,91 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+// Hand-tuned M2 palette built around the brandbook's Electric Violet (#7C3AED)
+// and Cyan (#06B6D4) accent, since Material 16 ships the M2 theming API.
+$ireachflow-violet-palette: (
+  50: #f3edfe,
+  100: #e1d1fb,
+  200: #cdb2f8,
+  300: #b993f5,
+  400: #a97af2,
+  500: #7c3aed,
+  600: #7433da,
+  700: #692ac3,
+  800: #5f22ac,
+  900: #4c1785,
+  A100: #e1d1fb,
+  A200: #cdb2f8,
+  A400: #a97af2,
+  A700: #692ac3,
+  contrast: (
+    50: #111827,
+    100: #111827,
+    200: #111827,
+    300: #111827,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: #111827,
+    A200: #111827,
+    A400: #111827,
+    A700: white,
+  )
+);
+
+$ireachflow-cyan-palette: (
+  50: #e4f8fb,
+  100: #bdedf4,
+  200: #91e1ec,
+  300: #63d5e3,
+  400: #3ccbdc,
+  500: #06b6d4,
+  600: #05a5c1,
+  700: #0491aa,
+  800: #037d94,
+  900: #015c6e,
+  A100: #bdedf4,
+  A200: #91e1ec,
+  A400: #3ccbdc,
+  A700: #0491aa,
+  contrast: (
+    50: #111827,
+    100: #111827,
+    200: #111827,
+    300: #111827,
+    400: #111827,
+    500: #111827,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: #111827,
+    A200: #111827,
+    A400: #111827,
+    A700: white,
+  )
+);
+
+$ireachflow-primary: mat.define-palette($ireachflow-violet-palette);
+$ireachflow-accent: mat.define-palette($ireachflow-cyan-palette);
+$ireachflow-warn: mat.define-palette(mat.$red-palette);
+
+$ireachflow-typography: mat.define-typography-config(
+  $font-family: 'Inter, "Helvetica Neue", sans-serif',
+);
+
+$ireachflow-theme: mat.define-light-theme((
+  color: (
+    primary: $ireachflow-primary,
+    accent: $ireachflow-accent,
+    warn: $ireachflow-warn,
+  ),
+  typography: $ireachflow-typography,
+  density: 0,
+));
+
+@include mat.all-component-themes($ireachflow-theme);

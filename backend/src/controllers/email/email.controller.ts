@@ -9,6 +9,7 @@ import {
   Req,
   Res,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { Response } from 'express';
@@ -19,10 +20,12 @@ import { ParsingHelper } from 'src/helpers/parsing.helper';
 import { ParsingService } from 'src/services/parsing/parsing.service';
 import { EmailInfo } from 'src/models/email.model';
 import { EmailService } from 'src/services/email/email.service';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 var fs = require('fs');
 var path = require("path");
 
 @Controller('email')
+@UseGuards(JwtAuthGuard)
 export class EmailController {
   constructor(
     private parsingHelper: ParsingHelper,

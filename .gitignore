@@ -48,5 +48,8 @@ Thumbs.db
 /backend/dist
 /frontend/dist
 /backend/node_modules
+.env
+.env.*
+!.env.example
 /frontend/node_modules
 /frontend/run.log

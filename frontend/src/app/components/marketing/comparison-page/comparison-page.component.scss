@@ -1,0 +1,56 @@
+@import '../marketing-content-shared.scss';
+
+.cmp-table-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  overflow-x: auto;
+}
+
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  overflow: hidden;
+
+  th, td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid $color-border;
+  }
+
+  th {
+    background: $color-cloud;
+    font-family: 'Manrope', sans-serif;
+  }
+
+  .row-label {
+    font-weight: 600;
+    color: $color-text-muted;
+    white-space: nowrap;
+  }
+
+  .ireachflow-cell {
+    color: $color-violet-dark;
+    font-weight: 500;
+    background: $color-violet-light;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.cmp-cta {
+  text-align: center;
+  padding: 0 24px 72px;
+
+  a {
+    height: 46px;
+    padding: 0 28px !important;
+    display: inline-flex;
+    align-items: center;
+  }
+}

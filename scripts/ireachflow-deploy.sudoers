@@ -1,6 +1,6 @@
 # Grants the GitHub Actions self-hosted runner user passwordless sudo for
 # exactly the one script that installs/reloads the iReachFlow Nginx config.
-# Install on the runner host (adjust <runner-user> and <APP_PATH> first):
+# Install on the runner host (adjust <runner-user> first):
 #
 #   sudo visudo -cf scripts/ireachflow-deploy.sudoers   # validate syntax
 #   sudo install -o root -g root -m 0440 scripts/ireachflow-deploy.sudoers \
@@ -8,6 +8,7 @@
 #
 # <runner-user> is the account the Actions runner service runs as (check
 # with `whoami` in the "Show environment" workflow step's output).
-# <APP_PATH> must match the APP_PATH repo/environment variable exactly.
+# APP_PATH below matches the repo's APP_PATH variable (/var/www/ireachflow) —
+# update both if that variable ever changes.
 
-<runner-user> ALL=(root) NOPASSWD: /usr/bin/bash <APP_PATH>/scripts/install-nginx-config.sh <APP_PATH>
+<runner-user> ALL=(root) NOPASSWD: /usr/bin/bash /var/www/ireachflow/scripts/install-nginx-config.sh /var/www/ireachflow

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
@@ -6,7 +6,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTabsModule} from '@angular/material/tabs';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -31,7 +31,6 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ValidationDialogComponent } from './dialogs/validation-dialog/validation-dialog.component';
-import { AuthenticationDialogComponent } from './dialogs/authentication-dialog/authentication-dialog.component';
 import { SwitcherComponent } from './components/elements/switcher/switcher.component';
 import { ClipComponent } from './components/elements/clip/clip.component';
 import { CloseButtonComponent } from './components/elements/close-button/close-button.component';
@@ -41,6 +40,25 @@ import { ReportTableComponent } from './components/report-table/report-table.com
 import { ReportChartComponent } from './components/report-chart/report-chart.component';
 import { TargetBaseComponent } from './components/target-base/target-base.component';
 
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { AppShellComponent } from './components/app-shell/app-shell.component';
+import { DashboardComponent } from './components/app-shell/dashboard/dashboard.component';
+import { SettingsComponent } from './components/app-shell/settings/settings.component';
+import { MarketingShellComponent } from './components/marketing/marketing-shell/marketing-shell.component';
+import { PricingComponent } from './components/marketing/pricing/pricing.component';
+import { SeoLandingPageComponent } from './components/marketing/seo-landing-page/seo-landing-page.component';
+import { ComparisonPageComponent } from './components/marketing/comparison-page/comparison-page.component';
+import { FaqComponent } from './components/marketing/faq/faq.component';
+import { BlogListComponent } from './components/marketing/blog-list/blog-list.component';
+import { BlogPostComponent } from './components/marketing/blog-post/blog-post.component';
+
+import { CredentialsInterceptor } from './interceptors/credentials.interceptor';
+import { AuthService } from './services/auth.service';
+
+function initializeAuth(authService: AuthService) {
+  return () => authService.init();
+}
 
 @NgModule({
   declarations: [
@@ -48,7 +66,6 @@ import { TargetBaseComponent } from './components/target-base/target-base.compon
     MailPreparationComponent,
     MainPageComponent,
     ValidationDialogComponent,
-    AuthenticationDialogComponent,
     SwitcherComponent,
     ClipComponent,
     CloseButtonComponent,
@@ -56,7 +73,19 @@ import { TargetBaseComponent } from './components/target-base/target-base.compon
     ReportComponent,
     ReportTableComponent,
     ReportChartComponent,
-    TargetBaseComponent
+    TargetBaseComponent,
+    LoginComponent,
+    RegisterComponent,
+    AppShellComponent,
+    DashboardComponent,
+    SettingsComponent,
+    MarketingShellComponent,
+    PricingComponent,
+    SeoLandingPageComponent,
+    ComparisonPageComponent,
+    FaqComponent,
+    BlogListComponent,
+    BlogPostComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,10 +116,17 @@ import { TargetBaseComponent } from './components/target-base/target-base.compon
     MatProgressBarModule,
     MatButtonToggleModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
-    
+
   ],
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
+    { provide: HTTP_INTERCEPTORS, useClass: CredentialsInterceptor, multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAuth,
+      deps: [AuthService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

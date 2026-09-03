@@ -1,0 +1,8 @@
+<article class="blog-post" *ngIf="post">
+  <a class="back-link" routerLink="/blog">&larr; Back to blog</a>
+  <span class="blog-category">{{ post.category }}</span>
+  <h1>{{ post.title }}</h1>
+  <p class="post-date">{{ post.publishedOn | date:'MMMM d, y' }}</p>
+
+  <p class="post-paragraph" *ngFor="let paragraph of post.body">{{ paragraph }}</p>
+</article>

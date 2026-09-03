@@ -135,38 +135,6 @@ ngx-editor {
     background-color: $primary-background-color !important;
   }
 
-.signin-fullscreen-dialog {
-    background-color: transparent !important;
-    margin-top: 10%;
-    height: 100vh;
-    width: 100vw;
-    align-items: center;
-    align-self: center;
-    align-content: center;
-    justify-content: center;
-    justify-self: center;
-    justify-items: center;
-    text-align: center;
-
-    .authentication-dialog {
-        border: 2px solid $primary-border-color;
-        background-color: $primary-semitransparentbackground-color !important;
-        align-items: center;
-        align-self: center;
-        align-content: center;
-        justify-content: center;
-        justify-self: center;
-        justify-items: center;
-        display: block;
-        position: relative;
-        .authentication-input {
-            color: $primary-text-color;
-            padding: 1rem;
-        }
-    }
-   
-}
-
 .mat-mdc-dialog-container .mdc-dialog__surface {
     background-color: $primary-semitransparentbackground-color !important;
 }

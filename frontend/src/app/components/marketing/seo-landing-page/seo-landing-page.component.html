@@ -1,0 +1,25 @@
+<ng-container *ngIf="page">
+  <section class="lp-hero">
+    <h1>{{ page.h1 }}</h1>
+    <p>{{ page.subheadline }}</p>
+    <div class="lp-actions">
+      <a mat-flat-button color="primary" routerLink="/register">Start Free</a>
+      <a mat-stroked-button routerLink="/pricing">See pricing</a>
+    </div>
+  </section>
+
+  <section class="lp-body">
+    <div class="lp-section" *ngFor="let section of page.sections">
+      <h2>{{ section.heading }}</h2>
+      <p>{{ section.body }}</p>
+    </div>
+  </section>
+
+  <section class="lp-faq" *ngIf="page.faqs.length">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" *ngFor="let faq of page.faqs">
+      <h3>{{ faq.q }}</h3>
+      <p>{{ faq.a }}</p>
+    </div>
+  </section>
+</ng-container>

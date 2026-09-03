@@ -1,0 +1,87 @@
+@import 'src/styles/variables.scss';
+
+:host {
+  display: block;
+}
+
+.lp-hero, .cmp-hero, .faq-hero, .blog-hero {
+  text-align: center;
+  padding: 64px 24px 40px;
+  max-width: 760px;
+  margin: 0 auto;
+
+  h1 {
+    font-size: 2.4rem;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: $color-text-muted;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+}
+
+.lp-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+
+  a {
+    height: 44px;
+    padding: 0 24px !important;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.lp-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 24px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.lp-section {
+  h2 {
+    font-size: 1.3rem;
+    margin: 0 0 8px;
+  }
+
+  p {
+    color: $color-text-muted;
+    line-height: 1.7;
+    margin: 0;
+  }
+}
+
+.lp-faq {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px 72px;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+}
+
+.faq-item {
+  border-top: 1px solid $color-border;
+  padding: 20px 0;
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 1.02rem;
+  }
+
+  p {
+    margin: 0;
+    color: $color-text-muted;
+    line-height: 1.6;
+  }
+}

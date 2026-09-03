@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { NestApplicationOptions } from '@nestjs/common';
+import { NestApplicationOptions, ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
 import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.interface';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { exposedHeaders, headers, methods, whiteList } from './config';
+import * as cookieParser from 'cookie-parser';
 
 const https = require('https');
 const fs = require('fs');
@@ -20,7 +21,6 @@ async function bootstrap() {
   // };
 
   const options: NestApplicationOptions = {
-    cors: true,
     bodyParser: true,
     //httpsOptions: httpsOptions,
   };
@@ -31,6 +31,11 @@ async function bootstrap() {
   );
 
   app.setGlobalPrefix('/api');
+
+  app.use(cookieParser());
+  app.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, transform: true }),
+  );
 
   app.enableCors({
     allowedHeaders: headers,

@@ -1,0 +1,20 @@
+<section class="pricing-page">
+  <div class="pricing-header">
+    <h1>Simple pricing that grows with you</h1>
+    <p>Start free. Upgrade when your contacts, mailboxes, or automations outgrow the plan you're on.</p>
+  </div>
+
+  <div class="plans-grid">
+    <div class="plan-card" *ngFor="let plan of plans" [class.highlighted]="plan.highlighted">
+      <div class="plan-name">{{ plan.name }}</div>
+      <div class="plan-price">{{ plan.price }}</div>
+      <div class="plan-audience">{{ plan.audience }}</div>
+      <ul>
+        <li *ngFor="let cap of plan.capabilities">{{ cap }}</li>
+      </ul>
+      <a mat-flat-button [color]="plan.highlighted ? 'primary' : undefined" [class.plan-cta-outline]="!plan.highlighted" routerLink="/register">
+        {{ plan.name === 'Enterprise' ? 'Contact us' : 'Start Free' }}
+      </a>
+    </div>
+  </div>
+</section>

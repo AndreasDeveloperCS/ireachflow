@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Editor, Toolbar } from 'ngx-editor';
-import { AuthenticationDialogComponent } from 'src/app/dialogs/authentication-dialog/authentication-dialog.component';
 import { ValidationDialogComponent } from 'src/app/dialogs/validation-dialog/validation-dialog.component';
 import { EmailForm, EmailFormData, FileData } from 'src/app/models/email-form';
 import { EmailSenderService } from 'src/app/services/email-sender.service';
@@ -70,7 +69,6 @@ export class TargetBaseComponent {
   ];
 
   emailText: any = '';
-  private pw = "FastSenderHermes";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -81,25 +79,6 @@ export class TargetBaseComponent {
     private spinnnerService:SpinnnerService
   ) {
 
-    const retreivedPassword = localStorage.getItem('affmailer-login');
-
-    if(retreivedPassword != this.pw){
-      const dialogRef = this.matDialog.open(AuthenticationDialogComponent, {
-        panelClass: 'signin-fullscreen-dialog',
-        // data: signInData,
-        disableClose: true,
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-    
-        if(result == this.pw) {
-          localStorage.setItem("affmailer-login", result);
-        }
-        if(result != this.pw)
-          this.router.navigate(['main']);
-      });
-    }
-    
     const retreived = localStorage.getItem('affmailer');
 
     if (retreived != null) {

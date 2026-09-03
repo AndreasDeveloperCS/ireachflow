@@ -11,12 +11,8 @@ export class MongodbConfigService implements MongooseOptionsFactory {
   public mongooseOptions(): MongooseModuleOptions {
 
     const options: MongooseModuleOptions = {
-      uri: 'mongodb+srv://affmailer:Q4Fl6oU5eSIjAD5O@affmailer.i4tul1v.mongodb.net/affmailer',
-      //uri: 'mongodb+srv://devUser:ghzATDgDhDHcZvFP@dev.arg3n.mongodb.net/kingpin?retryWrites=true&w=majority',
+      uri: this.configService.get<string>('mongodbUri'),
       retryAttempts: 1,
-      //dbName: 'affmailer',
-      //useNewUrlParser: true,
-      //useUnifiedTopology: true,
     };
 
     return options;
@@ -30,9 +26,7 @@ export class MongodbConfigService implements MongooseOptionsFactory {
       const connection = async () => {
         try {
 
-          const client = new MongoClient(
-             'mongodb+srv://affmailer:Q4Fl6oU5eSIjAD5O@affmailer.i4tul1v.mongodb.net/affmailer', {
-              //useNewUrlParser: true,
+          const client = new MongoClient(this.configService.get<string>('mongodbUri'), {
               useUnifiedTopology: true,
           });
 

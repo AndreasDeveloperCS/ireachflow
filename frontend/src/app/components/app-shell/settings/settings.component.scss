@@ -1,0 +1,68 @@
+@import 'src/styles/variables.scss';
+
+.settings-page {
+  max-width: 720px;
+}
+
+.settings-section {
+  background: white;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 1rem;
+    margin: 0 0 16px;
+  }
+}
+
+.section-hint {
+  color: $color-text-muted;
+  font-size: 0.85rem;
+  margin: -8px 0 16px;
+}
+
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid $color-border;
+  font-size: 0.92rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  span:first-child {
+    color: $color-text-muted;
+  }
+}
+
+.team-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+
+  th {
+    text-align: left;
+    color: $color-text-muted;
+    font-weight: 500;
+    padding: 8px 4px;
+    border-bottom: 1px solid $color-border;
+  }
+
+  td {
+    padding: 10px 4px;
+    border-bottom: 1px solid $color-border;
+  }
+}
+
+.role-badge {
+  background: $color-violet-light;
+  color: $color-violet-dark;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}

@@ -1,0 +1,11 @@
+<section class="faq-hero">
+  <h1>Frequently asked questions</h1>
+  <p>Straight answers about how iReachFlow works, what it supports, and how it keeps sending safe.</p>
+</section>
+
+<section class="lp-faq">
+  <div class="faq-item" *ngFor="let faq of faqs">
+    <h3>{{ faq.q }}</h3>
+    <p>{{ faq.a }}</p>
+  </div>
+</section>

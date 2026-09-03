@@ -1,0 +1,13 @@
+<section class="blog-hero">
+  <h1>From the iReachFlow blog</h1>
+  <p>Practical guides on email automation, personalization, deliverability, and AI email marketing.</p>
+</section>
+
+<section class="blog-grid">
+  <a class="blog-card" *ngFor="let post of posts" [routerLink]="['/blog', post.slug]">
+    <span class="blog-category">{{ post.category }}</span>
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.description }}</p>
+    <span class="blog-date">{{ post.publishedOn | date:'MMMM d, y' }}</span>
+  </a>
+</section>

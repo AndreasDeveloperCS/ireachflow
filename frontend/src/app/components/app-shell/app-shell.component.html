@@ -1,0 +1,38 @@
+<div class="shell">
+  <aside class="sidebar">
+    <a class="sidebar-brand" routerLink="/">
+      <img src="assets/branding/ireachflow-logo.svg" alt="iReachFlow" height="28">
+      <span>iReachFlow</span>
+    </a>
+
+    <nav class="sidebar-nav">
+      <a *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="active">
+        <mat-icon>{{ link.icon }}</mat-icon>
+        <span>{{ link.label }}</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="shell-main">
+    <header class="topbar">
+      <div class="spacer"></div>
+
+      <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-chip" *ngIf="authService.currentUser as user">
+        <span class="user-avatar">{{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}</span>
+        <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+        <span class="user-role">{{ roleLabels[user.role] }}</span>
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Log out</span>
+        </button>
+      </mat-menu>
+    </header>
+
+    <main class="shell-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

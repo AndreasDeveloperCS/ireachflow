@@ -5,31 +5,45 @@ $screen-size-netbook: 1280px;
 $screen-size-middle: 1600px;
 $screen-size-laptop: 1920px;
 
-$primary-text-color: rgb(55, 248, 136);
+// Brandbook color system (iReachFlow, September 2026)
+$color-navy: #111827; // Primary / trust
+$color-violet: #7c3aed; // Innovation accent
+$color-cyan: #06b6d4; // Flow / communication
+$color-green: #10b981; // Success
+$color-cloud: #f8fafc; // Light background
+$color-midnight: #0b1120; // Dark background
+$color-violet-dark: #5b21b6;
+$color-violet-light: #ede9fe;
+$color-border: #e2e8f0;
+$color-text-muted: #64748b;
 
-$primary-border-color: green;
-$hover-border-color:rgb(47, 239, 47);
-$active-border-color: rgb(104, 255, 104);
-$disabled-border-color: rgb(180, 227, 180);
+// Legacy variable names kept so existing component styles keep working,
+// remapped onto the brand palette instead of the old dark green/blue theme.
+$primary-text-color: $color-navy;
 
-$primary-background-color:  rgb(0, 9, 35);
-$primary-semitransparentbackground-color:  rgba(0, 9, 35, 0.75);
-$hover-background-color: rgb(4, 20, 144);
-$active-background-color:  rgb(38, 62, 245);
-$disabled-background-color:  rgb(83, 88, 133);
+$primary-border-color: $color-violet;
+$hover-border-color: $color-violet-dark;
+$active-border-color: $color-green;
+$disabled-border-color: #cbd5e1;
 
-$primary: #00145abf;
-$primary-half: rgba(0, 20, 90, 0.5);
-$primaryOne:#006F8F;
-$primaryTwo:#15429B;
-$primaryThree: #28AFB0;
-$primary-dark: rgba(#000D3D, (1.0));
-$secondary:#ACCCF9;
+$primary-background-color: $color-cloud;
+$primary-semitransparentbackground-color: rgba(255, 255, 255, 0.94);
+$hover-background-color: $color-violet-light;
+$active-background-color: $color-violet;
+$disabled-background-color: #e2e8f0;
+
+$primary: $color-violet;
+$primary-half: rgba(124, 58, 237, 0.5);
+$primaryOne: $color-cyan;
+$primaryTwo: $color-navy;
+$primaryThree: $color-green;
+$primary-dark: $color-midnight;
+$secondary: $color-cyan;
 $active-text: white;
-$text-field-color:rgba(85, 90, 223, 0.20);
+$text-field-color: rgba(124, 58, 237, 0.08);
 
 $alternative-background: radial-gradient($primary-dark 0%, $primaryTwo 55%, $primary-dark 100%);
 $secondary-background: radial-gradient($primary-dark, $primary, $primary-dark);
-$main-background-image: linear-gradient(45deg, $active-text 0%, $secondary 50%, $primaryOne 65%, $primaryTwo 80%, $primary-dark 100%);
-$misterious-background-image:radial-gradient($primary, $primary-dark);
-$main-button-gradient : linear-gradient(225deg, #28AFB0 0%, #186582 52.1%, #0A2158 100%);
+$main-background-image: linear-gradient(45deg, $color-navy 0%, $color-violet 65%, $color-midnight 100%);
+$misterious-background-image: radial-gradient($primary, $primary-dark);
+$main-button-gradient: linear-gradient(225deg, $color-violet 0%, $color-cyan 100%);

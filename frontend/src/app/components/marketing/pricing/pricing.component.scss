@@ -1,0 +1,106 @@
+@import 'src/styles/variables.scss';
+
+.pricing-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+}
+
+.pricing-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 48px;
+
+  p {
+    color: $color-text-muted;
+  }
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.plan-card {
+  border: 1px solid $color-border;
+  border-radius: 16px;
+  padding: 24px 20px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+
+  &.highlighted {
+    border-color: $color-violet;
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.15);
+    transform: translateY(-4px);
+  }
+}
+
+.plan-name {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.plan-price {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 4px 0;
+}
+
+.plan-audience {
+  color: $color-text-muted;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.plan-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.88rem;
+
+  li {
+    padding-left: 18px;
+    position: relative;
+
+    &::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: $color-green;
+      font-weight: 700;
+    }
+  }
+}
+
+.plan-card a {
+  text-align: center;
+  justify-content: center;
+}
+
+.plan-cta-outline {
+  background: $color-violet-light !important;
+  color: $color-violet-dark !important;
+}
+
+@media (max-width: $screen-size-laptop) {
+  .plans-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: $screen-size-tab) {
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-card.highlighted {
+    transform: none;
+  }
+}

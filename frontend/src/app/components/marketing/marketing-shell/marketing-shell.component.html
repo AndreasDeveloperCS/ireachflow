@@ -1,0 +1,68 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" routerLink="/" (click)="closeMenu()">
+      <img src="assets/branding/ireachflow-logo.svg" alt="iReachFlow" height="32">
+      <span class="brand-name">iReachFlow</span>
+    </a>
+
+    <nav class="site-nav" [class.open]="menuOpen">
+      <a routerLink="/email-automation" routerLinkActive="active" (click)="closeMenu()">Features</a>
+      <a routerLink="/real-estate" routerLinkActive="active" (click)="closeMenu()">Industries</a>
+      <a routerLink="/pricing" routerLinkActive="active" (click)="closeMenu()">Pricing</a>
+      <a routerLink="/blog" routerLinkActive="active" (click)="closeMenu()">Blog</a>
+      <a routerLink="/faq" routerLinkActive="active" (click)="closeMenu()">FAQ</a>
+
+      <ng-container *ngIf="!authService.isAuthenticated(); else appLink">
+        <a class="nav-cta-secondary" routerLink="/login" (click)="closeMenu()">Log in</a>
+        <a class="nav-cta" routerLink="/register" (click)="closeMenu()">Start Free</a>
+      </ng-container>
+      <ng-template #appLink>
+        <a class="nav-cta" routerLink="/app/dashboard" (click)="closeMenu()">Go to app</a>
+      </ng-template>
+    </nav>
+
+    <button class="menu-toggle" type="button" (click)="toggleMenu()" aria-label="Toggle navigation">
+      <mat-icon>{{ menuOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/branding/ireachflow-logo.svg" alt="iReachFlow" height="28">
+      <p>Reach thousands. Keep it personal.</p>
+    </div>
+
+    <div class="footer-columns">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a routerLink="/pricing">Pricing</a>
+        <a routerLink="/email-automation">Email automation</a>
+        <a routerLink="/email-personalization">Personalization</a>
+      </div>
+      <div class="footer-col">
+        <h4>Industries</h4>
+        <a routerLink="/real-estate">Real estate</a>
+        <a routerLink="/ecommerce">Ecommerce</a>
+        <a routerLink="/agencies">Agencies</a>
+      </div>
+      <div class="footer-col">
+        <h4>Compare</h4>
+        <a routerLink="/compare/mailchimp">vs Mailchimp</a>
+        <a routerLink="/compare/hubspot">vs HubSpot</a>
+        <a routerLink="/compare/gmass">vs GMass</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a routerLink="/blog">Blog</a>
+        <a routerLink="/faq">FAQ</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; {{ currentYear }} iReachFlow. All rights reserved.</div>
+</footer>

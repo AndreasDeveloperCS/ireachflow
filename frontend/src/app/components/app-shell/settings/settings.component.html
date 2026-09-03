@@ -1,0 +1,32 @@
+<div class="settings-page">
+  <h1>Settings</h1>
+
+  <section class="settings-section" *ngIf="authService.currentUser as user">
+    <h2>Account</h2>
+    <div class="settings-row"><span>Name</span><span>{{ user.firstName }} {{ user.lastName }}</span></div>
+    <div class="settings-row"><span>Email</span><span>{{ user.email }}</span></div>
+    <div class="settings-row"><span>Role</span><span>{{ roleLabels[user.role] }}</span></div>
+  </section>
+
+  <section class="settings-section">
+    <h2>Team</h2>
+    <p class="section-hint" *ngIf="!canManageTeam()">Only owners and admins can manage team roles.</p>
+
+    <table class="team-table" *ngIf="!loadingMembers">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let member of members">
+          <td>{{ member.firstName }} {{ member.lastName }}</td>
+          <td>{{ member.email }}</td>
+          <td><span class="role-badge">{{ roleLabels[member.role] }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

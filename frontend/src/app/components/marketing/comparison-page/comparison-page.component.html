@@ -1,0 +1,29 @@
+<ng-container *ngIf="comparison">
+  <section class="cmp-hero">
+    <h1>{{ comparison.title }}</h1>
+    <p>{{ comparison.summary }}</p>
+  </section>
+
+  <section class="cmp-table-wrap">
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>iReachFlow</th>
+          <th>{{ comparison.competitorName }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of comparison.rows">
+          <td class="row-label">{{ row.label }}</td>
+          <td class="ireachflow-cell">{{ row.ireachflow }}</td>
+          <td>{{ row.competitor }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="cmp-cta">
+    <a mat-flat-button color="primary" routerLink="/register">Start Free</a>
+  </section>
+</ng-container>
