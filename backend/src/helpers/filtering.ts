@@ -39,13 +39,10 @@ export const FilteringParams = createParamDecorator((data, ctx: ExecutionContext
         throw new BadRequestException('Invalid filter parameter');
     }
 
-    // validate the format of the filter, if the rule is 'isnull' or 'isnotnull' it don't need to have a value
-    if (!filter.match(/^[a-zA-Z0-9_]+:(eq|neq|gt|gte|lt|lte|like|nlike|in|nin):[a-zA-Z0-9_,]+$/) && !filter.match(/^[a-zA-Z0-9_]+:(isnull|isnotnull)$/)) {
-        throw new BadRequestException('Invalid filter parameter');
-    }
-
     // extract the parameters and validate if the rule and the property are valid
-    const [property, rule, value] = filter.split(':');
+    const [property, rule, ...valueParts] = filter.split(':');
+    const value = decodeURIComponent(valueParts.join(':'));
+    const hasValue = valueParts.length > 0 && value.length > 0;
     
     if (!data.includes(property)) {
         throw new BadRequestException(`Invalid filter property: ${property}`);
@@ -53,6 +50,21 @@ export const FilteringParams = createParamDecorator((data, ctx: ExecutionContext
 
     if (!Object.values(FilterRule).includes(rule as FilterRule)) {
         throw new BadRequestException(`Invalid filter rule: ${rule}`);
+    }
+
+    if (
+        (rule === FilterRule.IS_NULL || rule === FilterRule.IS_NOT_NULL) &&
+        hasValue
+    ) {
+        throw new BadRequestException('Invalid filter parameter');
+    }
+
+    if (
+        rule !== FilterRule.IS_NULL &&
+        rule !== FilterRule.IS_NOT_NULL &&
+        !hasValue
+    ) {
+        throw new BadRequestException('Invalid filter parameter');
     }
 
     return { property, rule, value };

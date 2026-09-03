@@ -40,7 +40,10 @@ export class SearchLogicService {
     }
 
     if (query.filterProperty && query.filterRule && query.filterValue) {
-      params = params.set('filter', `${query.filterProperty}:${query.filterRule}:${query.filterValue}`);
+      params = params.set(
+        'filter',
+        `${query.filterProperty}:${query.filterRule}:${encodeURIComponent(query.filterValue)}`,
+      );
     }
 
     return this.http.get<PaginatedResource<Email>>(`${environment.apiUrl}report`, { params });
