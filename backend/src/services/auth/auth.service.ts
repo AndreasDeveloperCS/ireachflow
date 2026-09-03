@@ -59,9 +59,11 @@ export class AuthService {
 
       return user;
     } catch (error) {
-      const cleanup = [this.organizationModel.deleteOne({ _id: organization._id })];
+      const cleanup: Promise<unknown>[] = [
+        Promise.resolve(this.organizationModel.deleteOne({ _id: organization._id })),
+      ];
       if (user?._id) {
-        cleanup.push(this.usersService.deleteById(user._id.toString()));
+        cleanup.push(Promise.resolve(this.usersService.deleteById(user._id.toString())));
       }
       await Promise.allSettled(cleanup);
 
