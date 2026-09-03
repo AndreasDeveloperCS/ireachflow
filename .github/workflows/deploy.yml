@@ -147,15 +147,10 @@ jobs:
           echo "iReachFlow frontend static build is present"
 
       - name: Install and reload Nginx
-        working-directory: ${{ vars.APP_PATH }}
         run: |
           set -euo pipefail
 
-          if [ "$(id -u)" -eq 0 ]; then
-            bash scripts/install-nginx-config.sh "${{ vars.APP_PATH }}"
-          elif sudo -n true >/dev/null 2>&1; then
-            sudo -n bash scripts/install-nginx-config.sh "${{ vars.APP_PATH }}"
-          else
-            echo "Passwordless sudo is required to install and reload the iReachFlow Nginx config"
-            exit 1
-          fi
+          echo "Installing iReachFlow Nginx configuration..."
+          sudo -n /usr/local/sbin/deploy-ireachflow-nginx
+
+          echo "Nginx deployment completed successfully"
