@@ -1,6 +1,6 @@
 
 export const environment = {
     production: true,
-    apiUrl: "https://ireachflow.com/api/",
+    apiUrl: "/api/",
     tokenVariable: 'affmailer-current-user-id',
   };

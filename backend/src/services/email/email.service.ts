@@ -20,7 +20,7 @@ var path = require("path");
 export class EmailService {
     testingEmail = "andrewdevelopercs@gmail.com";
     pixelUrl = "http://localhost:4000/api/asset";
-    pixelUrlServer = "https://affmailer.co/api/asset";
+    pixelUrlServer = "https://ireachflow.com/api/asset";
     dkimInfo:DkimInfo = new DkimInfo();
 
     constructor(public parsingHelper:ParsingHelper, public emailLoggingService: EmailLoggingService) {
