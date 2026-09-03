@@ -5,7 +5,6 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from 'src/app.controller';
 import { EmailController } from 'src/controllers/email/email.controller';
 import { AssetController } from 'src/controllers/asset/asset.controller';
@@ -45,14 +44,6 @@ import { ConfigService } from '@nestjs/config';
         signOptions: { expiresIn: configService.get<string>('jwt.expiresIn') },
       }),
     }),
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: 'mongodb+srv://affmailer:Q4Fl6oU5eSIjAD5O@affmailer.i4tul1v.mongodb.net/affmailer',
-      synchronize: true,
-      logging: true,
-      entities: [Email],
-    }),
-    TypeOrmModule.forFeature([Email]),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'assets'),
       renderPath: 'assets',
